@@ -1,5 +1,6 @@
 #pragma once
 #include "Antenna.h"
+#include "Constants.h"
 #define _USE_MATH_DEFINES
 #include <vector>
 #include <math.h>
@@ -7,6 +8,7 @@
 using namespace std;
 
 //operates in free space right now
+//maybe come up with some method of handling how antennas will radiate differently down the antenna? Like they aren't actually point sources even if we model them as such
 class Array
 {
 	vector<Antenna*> antennas;

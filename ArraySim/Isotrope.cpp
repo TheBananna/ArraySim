@@ -2,7 +2,7 @@
 
 float Isotrope::get_gain(float el, float az, float frequency)
 {
-    return 1;
+    return 1 * taper;
 }
 
 void Isotrope::set_taper(float taper)
