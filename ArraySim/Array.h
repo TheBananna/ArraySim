@@ -3,13 +3,19 @@
 #define _USE_MATH_DEFINES
 #include <vector>
 #include <math.h>
+#include <tuple>
 using namespace std;
+
+//operates in free space right now
 class Array
 {
+	vector<Antenna*> antennas;
+	vector<tuple<float, float, float>> antenna_positions;
 
 public:
-	void add_antenna(Antenna* antenna, float x, float y, float z);//adds an antenna at a certain position
+	void add_antenna(Antenna* antenna, float x, float y, float z);//adds an antenna at a certain position in meters
 	void remove_antenna(Antenna* antenna);//removes an antenna that was added
+	void clear_antennas();//clears all antennas
 	
 
 	//el_count and az_count define the fidelity of the simulation, the returned 2D vector is el_count x az_count in size
