@@ -44,7 +44,7 @@ vector<vector<float>> Array::simulate(float frequency, int el_count, int az_coun
 			float y = radius * sin(az) * sin(el);
 			float z = radius * cos(az);
 
-			float sum = 0;
+			float sum = 1;
 			for (size_t i = 0; i < antennas.size(); i++)
 			{
 				float a_x = std::get<0>(antenna_positions[i]);
