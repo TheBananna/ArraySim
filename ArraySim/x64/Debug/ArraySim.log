@@ -1,0 +1,12 @@
+﻿  Array.cpp
+C:\Github\ArraySim\ArraySim\Array.cpp(33,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Github\ArraySim\ArraySim\Array.cpp(34,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Github\ArraySim\ArraySim\Array.cpp(43,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Github\ArraySim\ArraySim\Array.cpp(44,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Github\ArraySim\ArraySim\Array.cpp(45,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Github\ArraySim\ArraySim\Array.cpp(57,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Github\ArraySim\ArraySim\Array.cpp(58,32): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Github\ArraySim\ArraySim\Array.cpp(61,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Github\ArraySim\ArraySim\Array.cpp(62,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Github\ArraySim\ArraySim\Array.cpp(63,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  ArraySim.vcxproj -> C:\Github\ArraySim\ArraySim\x64\Debug\ArraySim.exe

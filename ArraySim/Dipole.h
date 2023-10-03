@@ -1,7 +1,7 @@
 #pragma once
 #include "Antenna.h"
 
-class Dipole : Antenna
+class Dipole : public Antenna
 {
 private:
 	float taper;

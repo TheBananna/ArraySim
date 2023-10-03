@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Antenna.cpp" />
     <ClCompile Include="Array.cpp" />
     <ClCompile Include="ArraySim.cpp" />
     <ClCompile Include="Dipole.cpp" />

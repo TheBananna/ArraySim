@@ -1,11 +1,11 @@
 #pragma once
 #include "Antenna.h"
 
-class Isotrope : Antenna
+class Isotrope : public Antenna
 {
 private:
-	float taper;
-	float phase;
+	float taper = 1;
+	float phase = 0;
 
 public:
 	float get_gain(float el, float az, float frequency);//in radians, samples from linear, not logarithmic, gain pattern

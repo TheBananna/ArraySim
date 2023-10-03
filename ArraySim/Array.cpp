@@ -30,18 +30,19 @@ vector<vector<float>> Array::simulate(float frequency, int el_count, int az_coun
 {
 	vector<vector<float>> results;
 	//sweep across the sphere
-	float wavelength = c / frequency;
-	float quarter_wavelength = c / frequency / 4;
+	float wavelength = c0 / frequency;
+	float quarter_wavelength = c0 / frequency / 4;
+	//2 * D^2 / lambda
 	float radius = 2 * 100 * wavelength * wavelength / 2 / wavelength;//I know it's not simplified
 	int pos = 0;
-	for (float az = az_start; az < az_end; az += (az_end - az_end) / az_count)
+	for (float el = el_start; el < el_end; el += (el_end - el_start) / el_count)
 	{
-		vector<float> az_line;
-		for (float el = el_start; el < el_end; el += (el_end - el_start) / el_count)
+		vector<float> el_line;
+		for (float az = az_start; az < az_end; az += (az_end - az_start) / az_count)
 		{
-			float x = radius * cos(az) * sin(el);
+			float x = radius * sin(az) * cos(el);
 			float y = radius * sin(az) * sin(el);
-			float z = radius * cos(el);
+			float z = radius * cos(az);
 
 			float sum = 0;
 			for (size_t i = 0; i < antennas.size(); i++)
@@ -63,9 +64,9 @@ vector<vector<float>> Array::simulate(float frequency, int el_count, int az_coun
 
 				sum += mag;
 			}
-			az_line.push_back(sum);
+			el_line.push_back(sum);
 		}
-		results.push_back(az_line);
+		results.push_back(el_line);
 	}
 
 

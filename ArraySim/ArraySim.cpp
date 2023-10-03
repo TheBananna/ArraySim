@@ -4,15 +4,26 @@
 #include <iostream>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "Array.h"
+#include "Isotrope.h"
+#include "Constants.h"
 
-float c0 = 2.99792458e8;
-float eps0 = 8.8541878176203898505e-12;
-float mu0 = 4.0e-7 * M_PI;
-float eta0 = sqrt(mu0 / 8.853e-12);
 
+//lets test a basic 2 element lmbda / 2 isotrope array
 int main()
 {
-    
+    float frequency = 2e9;//2 GHZ
+    float wavelength = c0 / frequency;
+    Array array;
+    Isotrope a1;
+    array.add_antenna(&a1, -wavelength / 4, 0, 0);
+    array.add_antenna(&a1, wavelength / 4, 0, 0);
+
+    auto results = array.simulate(frequency, 1, 10);
+    for (float f : results[0])
+    {
+        std::cout << f << std::endl;
+    }
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
