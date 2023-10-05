@@ -44,7 +44,8 @@ vector<vector<float>> Array::simulate(float frequency, int el_count, int az_coun
 			float y = radius * sin(az) * sin(el);
 			float z = radius * cos(az);
 
-			float sum = 0;
+			float i_sum = 0;
+			float q_sum = 0;
 			for (size_t i = 0; i < antennas.size(); i++)
 			{
 				float a_x = std::get<0>(antenna_positions[i]);
@@ -60,11 +61,11 @@ vector<vector<float>> Array::simulate(float frequency, int el_count, int az_coun
 
 				float i_mag = cos(phase_rad) * antennas[i]->get_gain(el, az, frequency);
 				float q_mag = sin(phase_rad) * antennas[i]->get_gain(el, az, frequency);
-				float mag = sqrt(i_mag * i_mag + q_mag * q_mag);
 
-				sum += mag;
+				i_sum += i_mag;
+				q_sum += q_mag;
 			}
-			el_line.push_back(sum);
+			el_line.push_back(sqrt(i_sum * i_sum + q_sum * q_sum));
 		}
 		results.push_back(el_line);
 	}
