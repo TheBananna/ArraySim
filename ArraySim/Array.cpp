@@ -25,7 +25,8 @@ void Array::clear_antennas()
 }
 
 //right now assuming all antennas are less than 10 x the wavelength through free space
-//coordinates are based off of this image https://mathinsight.org/media/image/image/spherical_coordinates_cartesian.png
+//coordinates are based off ISO 80000-2:2019 as seen at https://en.wikipedia.org/wiki/Spherical_coordinate_system
+//theta is 90 degrees minus elevation, phi is azimuth starting from the positive x axis
 vector<vector<float>> Array::simulate(float frequency, int el_count, int az_count, float az_start, float az_end, float el_start, float el_end)
 {
 	vector<vector<float>> results;
@@ -40,8 +41,9 @@ vector<vector<float>> Array::simulate(float frequency, int el_count, int az_coun
 		vector<float> el_line;
 		for (float az = az_start; az < az_end; az += (az_end - az_start) / az_count)
 		{
-			float x = radius * sin(az) * cos(el);
-			float y = radius * sin(az) * sin(el);
+			//elevation/azumith of 0 is pointing towards positive y
+			float x = radius * cos(az) * cos(el);
+			float y = radius * cos(az) * sin(el);
 			float z = radius * cos(az);
 
 			float i_sum = 0;

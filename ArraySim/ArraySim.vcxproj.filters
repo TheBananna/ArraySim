@@ -47,13 +47,13 @@
     <ClInclude Include="Frontend.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Dipole.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Isotrope.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dipole.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
