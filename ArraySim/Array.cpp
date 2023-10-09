@@ -31,18 +31,23 @@ vector<vector<float>> Array::simulate(float frequency, int el_count, int az_coun
 	vector<vector<float>> results;
 	//sweep across the sphere
 	float wavelength = c0 / frequency;
-	float quarter_wavelength = c0 / frequency / 4;
-	//2 * D^2 / lambda
-	float radius = 2 * 100 * wavelength * wavelength / 2 / wavelength;//I know it's not simplified
+	float quarter_wavelength = wavelength / 4;
+	//2 * D^2 / lambda	an approximation of far field sphere
+	float radius = 2 * 1000 * wavelength * wavelength / 2 / wavelength;//I know it's not simplified
 	int pos = 0;
-	for (float el = el_start; el < el_end; el += (el_end - el_start) / el_count)
+	float el_step = (el_end - el_start) / (el_count - 1);
+	float az_step = (az_end - az_start) / (az_count - 1);
+	for (int i = 0; i < el_count; i++)
 	{
+		float el = el_start + i * el_step;
 		vector<float> el_line;
-		for (float az = az_start; az < az_end; az += (az_end - az_start) / az_count)
+		for (float j = 0; j < az_count; j++)
 		{
-			float x = radius * sin(az) * cos(el);
-			float y = radius * sin(az) * sin(el);
-			float z = radius * cos(az);
+			float az = az_start + j * az_step;
+			//z is up
+			float x = -radius * cos(el) * cos(az);
+			float y = radius * sin(az) * cos(el);
+			float z = radius * sin(el);
 
 			float i_sum = 0;
 			float q_sum = 0;
@@ -57,10 +62,10 @@ vector<vector<float>> Array::simulate(float frequency, int el_count, int az_coun
 				float dz = z - a_z;
 				float distance = sqrt(dx * dx + dy * dy + dz * dz);
 				float phase_shift_distance = fmod(distance, wavelength);
-				float phase_rad = phase_shift_distance / wavelength + antennas[i]->get_phase(el, az, frequency);
+				float phase_shift_rad = phase_shift_distance / wavelength * 2 * M_PI + antennas[i]->get_phase(el, az, frequency);
 
-				float i_mag = cos(phase_rad) * antennas[i]->get_gain(el, az, frequency);
-				float q_mag = sin(phase_rad) * antennas[i]->get_gain(el, az, frequency);
+				float i_mag = cos(phase_shift_rad) * antennas[i]->get_gain(el, az, frequency);
+				float q_mag = sin(phase_shift_rad) * antennas[i]->get_gain(el, az, frequency);
 
 				i_sum += i_mag;
 				q_sum += q_mag;
