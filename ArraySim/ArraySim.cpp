@@ -16,10 +16,19 @@ int main()
     float wavelength = c0 / frequency;
     Array array;
     Isotrope a1;
+    //array.add_antenna(&a1, -wavelength / 4, 0, -wavelength / 4);
+    //array.add_antenna(&a1, -wavelength / 4, 0, wavelength / 4);
+    //array.add_antenna(&a1, wavelength / 4, 0, -wavelength / 4);
+    //array.add_antenna(&a1, wavelength / 4, 0, wavelength / 4);
+
+    array.add_antenna(&a1, -3 * wavelength / 4, 0, 0);
     array.add_antenna(&a1, -wavelength / 4, 0, 0);
     array.add_antenna(&a1, wavelength / 4, 0, 0);
+    array.add_antenna(&a1, 3 * wavelength / 4, 0, 0);
 
-    auto results = array.simulate(frequency, 1, 10);
+
+
+    auto results = array.simulate(frequency, 2, 1000);
     for (float f : results[0])
     {
         std::cout << f << std::endl;

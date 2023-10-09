@@ -23,5 +23,5 @@ public:
 	//el_count and az_count define the fidelity of the simulation, the returned 2D vector is el_count x az_count in size
 	//intensity is linear
 	vector<vector<float>> simulate(float frequency, int el_count, int az_count, float az_start = 0, float az_end = M_PI, float el_start = 0, float el_end = M_PI);//does a pattern calculation at one frequency
-	vector<vector<vector<float>>> simulate_sweep(float start_frequency, float stop_frequency, int freq_count, int el_count, int az_count, float az_start = 0, float az_end = M_PI, float el_start = 0, float el_end = M_PI);
+	vector<vector<vector<float>>> simulate_sweep(float start_frequency, float stop_frequency, int freq_count, int el_count, int az_count, float az_start = 0, float az_end = M_PI, float el_start = -M_PI/2, float el_end = M_PI/2);
 };
