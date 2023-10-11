@@ -2,3 +2,4 @@
 ArraySim/x64/*
 ArraySim/x64/Debug/*
 ArraySim/x64/Release/*
+*.lock

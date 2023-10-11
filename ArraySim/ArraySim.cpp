@@ -7,9 +7,10 @@
 #include "Array.h"
 #include "Isotrope.h"
 #include "Constants.h"
+#include <string>
 
 
-//lets test a basic 2 element lmbda / 2 isotrope array
+
 int main()
 {
     float frequency = 2e9;//2 GHZ
