@@ -17,5 +17,5 @@ void Isotrope::set_phase(float phase)
 
 float Isotrope::get_phase(float el, float az, float frequency)
 {
-    return phase;
+    return this->phase;
 }
