@@ -1,19 +1,19 @@
 #include "Antenna.h"
 
-float Antenna::get_gain(float el, float az, float frequency)
+double Antenna::get_gain(double el, double az, double frequency)
 {
     return 0.0f;
 }
 
-void Antenna::set_taper(float taper)
+void Antenna::set_taper(double taper)
 {
 }
 
-void Antenna::set_phase(float phase)
+void Antenna::set_phase(double phase)
 {
 }
 
-float Antenna::get_phase(float el, float az, float frequency)
+double Antenna::get_phase(double el, double az, double frequency)
 {
     return 0.0f;
 }

@@ -1,21 +1,21 @@
 #include "Isotrope.h"
 
-float Isotrope::get_gain(float el, float az, float frequency)
+double Isotrope::get_gain(double el, double az, double frequency)
 {
     return 1 * taper;
 }
 
-void Isotrope::set_taper(float taper)
+void Isotrope::set_taper(double taper)
 {
     this->taper = taper;
 }
 
-void Isotrope::set_phase(float phase)
+void Isotrope::set_phase(double phase)
 {
     this->phase = phase;
 }
 
-float Isotrope::get_phase(float el, float az, float frequency)
+double Isotrope::get_phase(double el, double az, double frequency)
 {
     return this->phase;
 }

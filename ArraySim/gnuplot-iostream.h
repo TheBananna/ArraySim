@@ -462,7 +462,7 @@ struct BinfmtSender {
 };
 
 // BinfmtSender implementations for basic data types supported by gnuplot.
-template<> struct BinfmtSender< float> { static void send(std::ostream &stream) { stream << "%float";  } };
+template<> struct BinfmtSender< double> { static void send(std::ostream &stream) { stream << "%double";  } };
 template<> struct BinfmtSender<double> { static void send(std::ostream &stream) { stream << "%double"; } };
 template<> struct BinfmtSender<  int8_t> { static void send(std::ostream &stream) { stream << "%int8";   } };
 template<> struct BinfmtSender< uint8_t> { static void send(std::ostream &stream) { stream << "%uint8";  } };
@@ -475,7 +475,7 @@ template<> struct BinfmtSender<uint64_t> { static void send(std::ostream &stream
 
 // BinarySender implementations for basic data types supported by gnuplot.  These types can
 // just be sent as stored in memory, so all these senders inherit from FlatBinarySender.
-template<> struct BinarySender< float> : public FlatBinarySender< float> { };
+template<> struct BinarySender< double> : public FlatBinarySender< double> { };
 template<> struct BinarySender<double> : public FlatBinarySender<double> { };
 template<> struct BinarySender<  int8_t> : public FlatBinarySender<  int8_t> { };
 template<> struct BinarySender< uint8_t> : public FlatBinarySender< uint8_t> { };
@@ -499,14 +499,14 @@ template<> struct TextSender< unsigned char> : public CastIntTextSender< unsigne
 
 // Make sure that the same not-a-number string is printed on all platforms.
 template <typename T>
-struct FloatTextSender {
+struct doubleTextSender {
     static void send(std::ostream &stream, const T &v) {
         if(std::isnan(v)) { stream << "nan"; } else { stream << v; }
     }
 };
-template<> struct TextSender<      float> : FloatTextSender<      float> { };
-template<> struct TextSender<     double> : FloatTextSender<     double> { };
-template<> struct TextSender<long double> : FloatTextSender<long double> { };
+template<> struct TextSender<      double> : doubleTextSender<      double> { };
+template<> struct TextSender<     double> : doubleTextSender<     double> { };
+template<> struct TextSender<long double> : doubleTextSender<long double> { };
 
 // }}}2
 
@@ -1775,7 +1775,7 @@ private:
 
     void set_stream_options(std::ostream &os) const
     {
-        os << std::defaultfloat << std::setprecision(17);  // refer <iomanip>
+        os << std::defaultdouble << std::setprecision(17);  // refer <iomanip>
     }
 
 public:

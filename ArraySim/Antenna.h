@@ -6,10 +6,10 @@ class Antenna
 {
 
 public:
-	//virtual void set_frequency(float freq);//sets the frequency of the antenna
-	virtual float get_gain(float el, float az, float frequency);//in radians, samples from linear, not logarithmic, gain pattern
-	virtual void set_taper(float taper);//taper is a static multiplier to use for the gain
-	virtual void set_phase(float phase);//the phase offset for array steering
-	virtual float get_phase(float el, float az, float frequency);//basic model would ignore arguments
+	//virtual void set_frequency(double freq);//sets the frequency of the antenna
+	virtual double get_gain(double el, double az, double frequency);//in radians, samples from linear, not logarithmic, gain pattern
+	virtual void set_taper(double taper);//taper is a static multiplier to use for the gain
+	virtual void set_phase(double phase);//the phase offset for array steering
+	virtual double get_phase(double el, double az, double frequency);//basic model would ignore arguments
 
 };

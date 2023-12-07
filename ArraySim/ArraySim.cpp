@@ -15,8 +15,8 @@ using namespace matplot;
 
 int main()
 {
-    float frequency = 2e9;//2 GHZ
-    float wavelength = c0 / frequency;
+    double frequency = 2e9;//2 GHZ
+    double wavelength = c0 / frequency;
     Array array;
     Isotrope a1;
     a1.set_phase(0);
@@ -36,9 +36,10 @@ int main()
     //array.add_antenna(&a3, wavelength / 4, 0, 0);
     //array.add_antenna(&a4, 3 * wavelength / 4, 0, 0);
     
-    for (int z = -3; z <= 3; z++)
+    int size = 3;
+    for (int z = -size; z < size; z++)
     {
-        for (int x = -3; x <= 3; x++)
+        for (int x = -size; x < size; x++)
         {
             array.add_antenna(&a1, wavelength / 2 * x, 0, wavelength / 2 * z);
         }
@@ -49,7 +50,7 @@ int main()
     auto results = array.simulate(frequency, el_count, az_count);
     
     auto [X, Y] = meshgrid(linspace(-M_PI_2, M_PI_2, el_count), linspace(-M_PI_2, M_PI_2, az_count));
-    auto Z = transform(X, Y, [&](float el, float az) { return log(array.sim_el_az(frequency, el, az)); });
+    auto Z = transform(X, Y, [&](double el, double az) { return (array.sim_el_az(frequency, el, az)); });
     surf(X, Y, Z);
     xlabel("Elevation");
     ylabel("Azimuth");

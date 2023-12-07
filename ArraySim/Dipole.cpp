@@ -1,21 +1,21 @@
 #include "Dipole.h"
 
-float Dipole::get_gain(float el, float az, float frequency)
+double Dipole::get_gain(double el, double az, double frequency)
 {
     return 0.0f;
 }
 
-void Dipole::set_taper(float taper)
+void Dipole::set_taper(double taper)
 {
     this->taper = taper;
 }
 
-void Dipole::set_phase(float phase)
+void Dipole::set_phase(double phase)
 {
     this->phase = phase;
 }
 
-float Dipole::get_phase(float el, float az, float frequency)
+double Dipole::get_phase(double el, double az, double frequency)
 {
     return phase;
 }
