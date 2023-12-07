@@ -8,8 +8,10 @@
 #include "Isotrope.h"
 #include "Constants.h"
 #include <string>
+#include <matplot/matplot.h>
+#include <cmath>
 
-
+using namespace matplot;
 
 int main()
 {
@@ -17,30 +19,42 @@ int main()
     float wavelength = c0 / frequency;
     Array array;
     Isotrope a1;
-    a1.set_phase(2.5);
+    a1.set_phase(0);
     Isotrope a2;
-    a2.set_phase(5);
+    a2.set_phase(0);
     Isotrope a3;
-    a3.set_phase(7.5);
+    a3.set_phase(0);
     Isotrope a4;
-    a4.set_phase(10);
+    a4.set_phase(0);
     //array.add_antenna(&a1, -wavelength / 4, 0, -wavelength / 4);
     //array.add_antenna(&a1, -wavelength / 4, 0, wavelength / 4);
     //array.add_antenna(&a1, wavelength / 4, 0, -wavelength / 4);
     //array.add_antenna(&a1, wavelength / 4, 0, wavelength / 4);
 
-    array.add_antenna(&a1, -3 * wavelength / 4, 0, 0);
-    array.add_antenna(&a2, -wavelength / 4, 0, 0);
-    array.add_antenna(&a3, wavelength / 4, 0, 0);
-    array.add_antenna(&a4, 3 * wavelength / 4, 0, 0);
-
-
-
-    auto results = array.simulate(frequency, 2, 60);
-    for (float f : results[0])
+    //array.add_antenna(&a1, -3 * wavelength / 4, 0, 0);
+    //array.add_antenna(&a2, -wavelength / 4, 0, 0);
+    //array.add_antenna(&a3, wavelength / 4, 0, 0);
+    //array.add_antenna(&a4, 3 * wavelength / 4, 0, 0);
+    
+    for (int z = -3; z <= 3; z++)
     {
-        std::cout << f << std::endl;
+        for (int x = -3; x <= 3; x++)
+        {
+            array.add_antenna(&a1, wavelength / 2 * x, 0, wavelength / 2 * z);
+        }
     }
+
+
+    const int el_count = 100, az_count = 100;
+    auto results = array.simulate(frequency, el_count, az_count);
+    
+    auto [X, Y] = meshgrid(linspace(-M_PI_2, M_PI_2, el_count), linspace(-M_PI_2, M_PI_2, az_count));
+    auto Z = transform(X, Y, [&](float el, float az) { return log(array.sim_el_az(frequency, el, az)); });
+    surf(X, Y, Z);
+    xlabel("Elevation");
+    ylabel("Azimuth");
+    //zlabel("Linear Gain");
+    show();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -1,6 +1,4 @@
 *.opendb
-ArraySim/x64/*
-ArraySim/x64/Debug/*
-ArraySim/x64/Release/*
+ArraySim/x64/
 *.lock
 ArraySim/.vs/
