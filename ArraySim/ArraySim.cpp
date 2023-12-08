@@ -37,9 +37,9 @@ int main()
     //array.add_antenna(&a4, 3 * wavelength / 4, 0, 0);
     
     int size = 3;
-    for (int z = -size; z < size; z++)
+    for (int z = -size; z <= size; z++)
     {
-        for (int x = -size; x < size; x++)
+        for (int x = -size; x <= size; x++)
         {
             array.add_antenna(&a1, wavelength / 2 * x, 0, wavelength / 2 * z);
         }
