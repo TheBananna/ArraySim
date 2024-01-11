@@ -37,6 +37,7 @@ int main()
     //array.add_antenna(&a4, 3 * wavelength / 4, 0, 0);
     
     int size = 3;
+    //for odd numbers of elements
     for (int z = -size; z <= size; z++)
     {
         for (int x = -size; x <= size; x++)
@@ -44,13 +45,21 @@ int main()
             array.add_antenna(&a1, wavelength / 2 * x, 0, wavelength / 2 * z);
         }
     }
+    //for even numbers of elements
+    //for (int z = 0; z < size * 2; z++)
+    //{
+    //    for (int x = 0; x < size * 2; x++)
+    //    {
+    //        array.add_antenna(&a1, -wavelength / 4 - wavelength / 2 * (size - 1) + wavelength / 2 * x, 0, -wavelength / 4 - wavelength / 2 * (size  - 1) + wavelength / 2 * z);
+    //    }
+    //}
 
 
     const int el_count = 100, az_count = 100;
     auto results = array.simulate(frequency, el_count, az_count);
     
     auto [X, Y] = meshgrid(linspace(-M_PI_2, M_PI_2, el_count), linspace(-M_PI_2, M_PI_2, az_count));
-    auto Z = transform(X, Y, [&](double el, double az) { return (array.sim_el_az(frequency, el, az)); });
+    auto Z = transform(X, Y, [&](double el, double az) { return 10 * log10(array.sim_el_az(frequency, el, az)); });
     surf(X, Y, Z);
     xlabel("Elevation");
     ylabel("Azimuth");

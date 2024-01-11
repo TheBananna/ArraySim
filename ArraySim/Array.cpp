@@ -27,7 +27,7 @@ void Array::clear_antennas()
 double Array::sim_el_az(double frequency, double el, double az)
 {
 	double wavelength = c0 / frequency;
-	double radius = 2 * 1000 * wavelength * wavelength / wavelength;
+	double radius = 2 * 1000 * wavelength * wavelength / wavelength;//very conservative far field distance approximation
 
 	double y = radius * cos(el) * cos(az);
 	double x = radius * sin(az) * cos(el);
@@ -55,6 +55,7 @@ double Array::sim_el_az(double frequency, double el, double az)
 	}
 	return sqrt(i_sum * i_sum + q_sum * q_sum);
 }
+
 
 double Array::sim_el_az2(double frequency, double el, double az, double spacing)
 {
@@ -141,8 +142,8 @@ std::vector<std::vector<double>> Array::simulate(double frequency, int el_count,
 				double phase_shift_distance = fmod(distance / wavelength, 1);
 				double phase_shift_rad = phase_shift_distance * 2 * M_PI + antennas[i]->get_phase(el, az, frequency);
 
-				double i_mag = cos(phase_shift_rad) * antennas[i]->get_gain(el, az, frequency);
-				double q_mag = sin(phase_shift_rad) * antennas[i]->get_gain(el, az, frequency);
+				double i_mag = cos(phase_shift_rad) * antennas[i]->get_gain(el, az, frequency) / distance / distance / 4 / M_PI;
+				double q_mag = sin(phase_shift_rad) * antennas[i]->get_gain(el, az, frequency) / distance / distance / 4 / M_PI;
 
 				i_sum += i_mag;
 				q_sum += q_mag;
