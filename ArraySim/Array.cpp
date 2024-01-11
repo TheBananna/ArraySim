@@ -27,8 +27,9 @@ void Array::clear_antennas()
 double Array::sim_el_az(double frequency, double el, double az)
 {
 	double wavelength = c0 / frequency;
-	double radius = 2 * 1000 * wavelength * wavelength / wavelength;//very conservative far field distance approximation
+	double radius = 2 * 1000 * wavelength * wavelength / wavelength; //conservative far field distance approximation
 
+	//elevation and azimuth here are 0 normal to the xz plane or down boresight
 	double y = radius * cos(el) * cos(az);
 	double x = radius * sin(az) * cos(el);
 	double z = radius * sin(el);
@@ -45,9 +46,9 @@ double Array::sim_el_az(double frequency, double el, double az)
 		double dy = y - a_y;
 		double dz = z - a_z;
 		double distance = sqrt(dx * dx + dy * dy + dz * dz);
-		double phase_shift_rad = distance / wavelength * 2 * M_PI + antennas[i]->get_phase(el, az, frequency);
+		double phase_shift_rad = distance / wavelength * 2 * M_PI + antennas[i]->get_phase(el, az, frequency); //cosine repeats so no need to do % 1 of the division result
 
-		double i_mag = cos(phase_shift_rad) * antennas[i]->get_gain(el, az, frequency);//not sure this gain is in the right spot
+		double i_mag = cos(phase_shift_rad) * antennas[i]->get_gain(el, az, frequency);
 		double q_mag = sin(phase_shift_rad) * antennas[i]->get_gain(el, az, frequency);
 
 		i_sum += i_mag;
