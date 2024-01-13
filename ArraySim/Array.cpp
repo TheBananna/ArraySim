@@ -24,15 +24,56 @@ void Array::clear_antennas()
 	antenna_positions.clear();
 }
 
+//double Array::sim_el_az(double frequency, double el, double az)
+//{
+//	double wavelength = c0 / frequency;
+//	double radius = 2 * 1000 * wavelength * wavelength / wavelength; //conservative far field distance approximation
+//
+//	//elevation and azimuth here are 0 normal to the xz plane or down boresight
+//	double y = radius * cos(el) * cos(az);
+//	double x = radius * sin(az) * cos(el);
+//	double z = radius * sin(el);
+//
+//	double i_sum = 0;
+//	double q_sum = 0;
+//	for (size_t i = 0; i < antennas.size(); i++)
+//	{
+//		double a_x = std::get<0>(antenna_positions[i]);
+//		double a_y = std::get<1>(antenna_positions[i]);
+//		double a_z = std::get<2>(antenna_positions[i]);
+//
+//		double dx = x - a_x;
+//		double dy = y - a_y;
+//		double dz = z - a_z;
+//		double distance = sqrt(dx * dx + dy * dy + dz * dz);
+//		double phase_shift_rad = distance / wavelength * 2 * M_PI + antennas[i]->get_phase(el, az, frequency); //cosine repeats so no need to do % 1 of the division result
+//
+//		double i_mag = cos(phase_shift_rad) * antennas[i]->get_gain(el, az, frequency);
+//		double q_mag = sin(phase_shift_rad) * antennas[i]->get_gain(el, az, frequency);
+//
+//		i_sum += i_mag;
+//		q_sum += q_mag;
+//	}
+//	return sqrt(i_sum * i_sum + q_sum * q_sum);
+//}
+
+//based off of https://mathinsight.org/distance_point_plane for plane math
 double Array::sim_el_az(double frequency, double el, double az)
 {
 	double wavelength = c0 / frequency;
-	double radius = 2 * 1000 * wavelength * wavelength / wavelength; //conservative far field distance approximation
+	double radius = 2000 * wavelength; //conservative far field distance approximation
 
 	//elevation and azimuth here are 0 normal to the xz plane or down boresight
 	double y = radius * cos(el) * cos(az);
 	double x = radius * sin(az) * cos(el);
 	double z = radius * sin(el);
+
+	//plane wave coefficients, no normalization as that doesn't affect direction
+	double A = x / radius;
+	double B = y / radius;
+	double C = z / radius;
+	double D = -A * x - B * y - C * z;
+
 
 	double i_sum = 0;
 	double q_sum = 0;
@@ -45,7 +86,8 @@ double Array::sim_el_az(double frequency, double el, double az)
 		double dx = x - a_x;
 		double dy = y - a_y;
 		double dz = z - a_z;
-		double distance = sqrt(dx * dx + dy * dy + dz * dz);
+
+		double distance = std::abs(A * dx + B * dy + C * dz) / std::sqrt(A * A + B * B + C * C);//get the distance from the antenna to the far field plane, the plane maybe needs to be in the near field touching an element?
 		double phase_shift_rad = distance / wavelength * 2 * M_PI + antennas[i]->get_phase(el, az, frequency); //cosine repeats so no need to do % 1 of the division result
 
 		double i_mag = cos(phase_shift_rad) * antennas[i]->get_gain(el, az, frequency);
