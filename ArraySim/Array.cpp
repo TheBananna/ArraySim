@@ -27,17 +27,12 @@ void Array::clear_antennas()
 double Array::sim_el_az(double frequency, double el, double az)
 {
 	double wavelength = c0 / frequency;
-	double radius = 2 * 1000 * wavelength * wavelength / wavelength; //conservative far field distance approximation
+	double radius = 2 * antennas.size()* wavelength; //conservative far field distance approximation
 
-	//elevation and azimuth here are 0 normal to the xz plane or down boresight
-	double y = radius * cos(el) * cos(az);
+	//elevation and azimuth here are 0 normal to the xz plane or down boresight, I've verified this is correct
 	double x = radius * sin(az) * cos(el);
+	double y = radius * cos(el) * cos(az);
 	double z = radius * sin(el);
-	if (std::abs(std::sqrt(x * x + y * y + z * z) - radius) > .1)
-	{
-		int j = 25;
-		std::cout << j;
-	}
 	
 
 	double i_sum = 0;

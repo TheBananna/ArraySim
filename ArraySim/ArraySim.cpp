@@ -36,49 +36,37 @@ int main()
     //array.add_antenna(&a3, wavelength / 4, 0, 0);
     //array.add_antenna(&a4, 3 * wavelength / 4, 0, 0);
     
-    int size = 16;
-    //for odd numbers of elements
+    int size = 8;
+    ////for odd numbers of elements
     //for (int z = -size; z <= size; z++)
     //{
     //    
-    //    
     //    for (int x = -size; x <= size; x++)
     //    {
-    //        Isotrope* a = new Isotrope();
-    //        a->set_phase(M_PI_4 * x);
-    //        array.add_antenna(a, wavelength / 2 * x, 0, wavelength / 2 * z);
+    //        //isotrope* a = new isotrope();
+    //        //a->set_phase(m_pi_4 * x);
+    //        array.add_antenna(&a1, wavelength / 2 * x, 0, wavelength / 2 * z);
     //    }
     //}
     //for even numbers of elements
     for (int z = 0; z < size * 2; z++)
     {
-        array.add_antenna(&a1, 0, 0, -wavelength / 4 - wavelength / 2 * (size - 1) + wavelength / 2 * z);
+        //array.add_antenna(&a1, 0, 0, -wavelength / 4 - wavelength / 2 * (size - 1) + wavelength / 2 * z);
         for (int x = 0; x < size * 2; x++)
         {
-            /*array.add_antenna(&a1, -wavelength / 4 - wavelength / 2 * (size - 1) + wavelength / 2 * x, 0, -wavelength / 4 - wavelength / 2 * (size  - 1) + wavelength / 2 * z);*/
+            array.add_antenna(&a1, -wavelength / 1 - wavelength * 2 * (size - 1) + wavelength * 2 * x, 0, -wavelength / 1 - wavelength * 2 * (size  - 1) + wavelength * 2 * z);
         }
     }
 
 
-    const int el_count = 1000, az_count = 2;
-    auto results = array.simulate(frequency, el_count, az_count);
+    const int el_count = 150, az_count = 150;
+    //auto results = array.simulate(frequency, el_count, az_count);
     
-    auto [X, Y] = meshgrid(linspace(0, 45, el_count), linspace(0, 45, az_count));
-    auto Z = transform(X, Y, [&](double el, double az) { return 20 * log10(array.sim_el_az(frequency, el / 45 * M_PI_2, az / 45 * M_PI_2)); });
+    auto [X, Y] = meshgrid(linspace(-M_PI / 3, M_PI / 3, el_count), linspace(-M_PI / 3, M_PI / 3, az_count));
+    vector_2d Z = transform(X, Y, [&](double az, double el) { return 20 * log10(array.sim_el_az(frequency, el, az)); });
     surf(X, Y, Z);
-    xlabel("Elevation");
-    ylabel("Azimuth");
+    //xlabel("Elevation");
+    //ylabel("Azimuth");
     //zlabel("Linear Gain");
     show();
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
