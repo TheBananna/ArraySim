@@ -27,7 +27,9 @@ void Array::clear_antennas()
 double Array::sim_el_az(double frequency, double el, double az)
 {
 	double wavelength = c0 / frequency;
-	double radius = 2 * antennas.size()* wavelength; //conservative far field distance approximation
+	//this technically only works if the spacing is less than sqrt(10) wavelengths I think. I should come up with something better than this.
+	//It comes from assuming this is an endfire array, D will be ~spacing * antenna count. Far field ~= 2 * D^2 / wavelength = 2 * n^2 * wavelength where n is the spacing coefficient with spacing = n * wavelength
+	double radius = 20 * antennas.size() * antennas.size() * wavelength; //conservative far field distance approximation
 
 	//elevation and azimuth here are 0 normal to the xz plane or down boresight, I've verified this is correct
 	double x = radius * sin(az) * cos(el);
