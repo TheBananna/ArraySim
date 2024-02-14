@@ -59,5 +59,11 @@
     <ClInclude Include="gnuplot-iostream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ArrayUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

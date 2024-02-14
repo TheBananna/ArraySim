@@ -1,9 +1,9 @@
 #include "Array.h"
 #include <iostream>
-void Array::add_antenna(Antenna* antenna, double x, double y, double z)
+void Array::add_antenna(Antenna* antenna, vec3d pos)
 {
 	antennas.push_back(antenna);
-	antenna_positions.push_back(std::make_tuple(x, y, z));
+	antenna_positions.push_back(pos);
 }
 
 void Array::remove_antenna(Antenna* antenna)
@@ -41,9 +41,9 @@ double Array::sim_el_az(double frequency, double el, double az)
 	double q_sum = 0;
 	for (size_t i = 0; i < antennas.size(); i++)
 	{
-		double a_x = std::get<0>(antenna_positions[i]);
-		double a_y = std::get<1>(antenna_positions[i]);
-		double a_z = std::get<2>(antenna_positions[i]);
+		double a_x = antenna_positions[i](0);
+		double a_y = antenna_positions[i](1);
+		double a_z = antenna_positions[i](2);
 
 		double dx = x - a_x;
 		double dy = y - a_y;
@@ -82,9 +82,9 @@ double Array::sim_el_az(double frequency, double el, double az)
 //	double q_sum = 0;
 //	for (size_t i = 0; i < antennas.size(); i++)
 //	{
-//		double a_x = std::get<0>(antenna_positions[i]);
-//		double a_y = std::get<1>(antenna_positions[i]);
-//		double a_z = std::get<2>(antenna_positions[i]);
+//		double a_x = antenna_positions[i](0);
+//		double a_y = antenna_positions[i](1);
+//		double a_z = antenna_positions[i](2);
 //
 //		double dx = x - a_x;
 //		double dy = y - a_y;

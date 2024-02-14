@@ -6,16 +6,18 @@
 #include <math.h>
 #include <tuple>
 #include <complex>
+#include "Eigen/Sparse"
+#include "Types.h"
 
 //operates in free space right now
 //maybe come up with some method of handling how antennas will radiate differently down the antenna? Like they aren't actually point sources even if we model them as such
 class Array
 {
 	std::vector<Antenna*> antennas;
-	std::vector<std::tuple<double, double, double>> antenna_positions;
+	std::vector<vec3d> antenna_positions;
 
 public:
-	void add_antenna(Antenna* antenna, double x, double y, double z);//adds an antenna at a certain position in meters
+	void add_antenna(Antenna* antenna, vec3d pos);//adds an antenna at a certain position in meters
 	void remove_antenna(Antenna* antenna);//removes an antenna that was added
 	void clear_antennas();//clears all antennas
 	
