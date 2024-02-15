@@ -26,7 +26,7 @@ void Array::clear_antennas()
 
 double Array::sim_el_az(double frequency, double el, double az)
 {
-	double wavelength = c0 / frequency;
+	double wavelength = c_0 / frequency;
 	//this technically only works if the spacing is less than sqrt(10) wavelengths I think. I should come up with something better than this.
 	//It comes from assuming this is an endfire array, D will be ~spacing * antenna count. Far field ~= 2 * D^2 / wavelength = 2 * n^2 * wavelength where n is the spacing coefficient with spacing = n * wavelength
 	double radius = 20 * antennas.size() * antennas.size() * wavelength; //conservative far field distance approximation
@@ -106,7 +106,7 @@ double Array::sim_el_az(double frequency, double el, double az)
 double Array::sim_el_az2(double frequency, double el, double az, double spacing)
 {
 	std::complex<double> j(0, 1);
-	double wavelength = c0 / frequency;
+	double wavelength = c_0 / frequency;
 	double radius = 2 * 1000 * wavelength * wavelength / wavelength;
 
 	double y = radius * cos(el) * cos(az);
@@ -121,9 +121,9 @@ double Array::sim_el_az2(double frequency, double el, double az, double spacing)
 	double ref = -M_PI_2;
 	for (size_t i = 0; i < antennas.size(); i++)
 	{
-		double a_x = std::get<0>(antenna_positions[i]);
-		double a_y = std::get<1>(antenna_positions[i]);
-		double a_z = std::get<2>(antenna_positions[i]);
+		double a_x = antenna_positions[i](0);
+		double a_y = antenna_positions[i](1);
+		double a_z = antenna_positions[i](2);
 
 		double dx = x - a_x;
 		double dy = y - a_y;
@@ -141,7 +141,7 @@ std::vector<std::vector<double>> Array::simulate(double frequency, int el_count,
 {
 	std::vector<std::vector<double>> results;
 	//sweep across the sphere
-	double wavelength = c0 / frequency;
+	double wavelength = c_0 / frequency;
 	double quarter_wavelength = wavelength / 4;
 	//2 * D^2 / lambda	an approximation of far field sphere
 	double radius = 2 * 1000 * wavelength * wavelength / wavelength;//I know it's not simplified
@@ -177,9 +177,9 @@ std::vector<std::vector<double>> Array::simulate(double frequency, int el_count,
 			double q_sum = 0;
 			for (size_t i = 0; i < antennas.size(); i++)
 			{
-				double a_x = std::get<0>(antenna_positions[i]);
-				double a_y = std::get<1>(antenna_positions[i]);
-				double a_z = std::get<2>(antenna_positions[i]);
+				double a_x = antenna_positions[i](0);
+				double a_y = antenna_positions[i](1);
+				double a_z = antenna_positions[i](2);
 
 				double dx = x - a_x;
 				double dy = y - a_y;

@@ -10,13 +10,14 @@
 #include <string>
 #include <matplot/matplot.h>
 #include <cmath>
+#include "ArrayUtil.h"
 
 using namespace matplot;
 
 int main()
 {
     double frequency = 2e9;//2 GHZ
-    double wavelength = c0 / frequency;
+    double wavelength = c_0 / frequency;
     Array array;
     Isotrope a1;
     a1.set_phase(0);
@@ -49,12 +50,16 @@ int main()
     //    }
     //}
     //for even numbers of elements
+
+    add_equitri_array(&array, { 0,0,0 }, { 0,0,0 }, { 2,2 }, 1);
+    return 0;
+
     for (int z = 0; z < size * 2; z++)
     {
         //array.add_antenna(&a1, 0, 0, -wavelength / 4 - wavelength / 2 * (size - 1) + wavelength / 2 * z);
         for (int x = 0; x < size * 2; x++)
         {
-            array.add_antenna(&a1, -wavelength / 1 - wavelength * 2 * (size - 1) + wavelength * 2 * x, 0, -wavelength / 1 - wavelength * 2 * (size  - 1) + wavelength * 2 * z);
+            array.add_antenna(&a1, { -wavelength / 1 - wavelength * 2 * (size - 1) + wavelength * 2 * x, 0, -wavelength / 1 - wavelength * 2 * (size - 1) + wavelength * 2 * z });
         }
     }
 
