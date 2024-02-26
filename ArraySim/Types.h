@@ -1,5 +1,5 @@
 #pragma once
-#include "Eigen/Dense"
+#include "Eigen/Core"
 
 //all vectors are column vectors unless otherwise stated to simplify doing rotation matricies
 typedef Eigen::Matrix<double, 3, 1> vec3d;

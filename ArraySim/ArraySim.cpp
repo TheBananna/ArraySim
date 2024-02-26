@@ -11,6 +11,7 @@
 #include <matplot/matplot.h>
 #include <cmath>
 #include "ArrayUtil.h"
+#include "Types.h"
 
 using namespace matplot;
 
@@ -51,7 +52,17 @@ int main()
     //}
     //for even numbers of elements
 
-    add_equitri_array(&array, { 0,0,0 }, { 0,0,0 }, { 2,2 }, 1);
+    vec3d center, dir;
+    center[0] = 0;
+    center[1] = 0;
+    center[2] = 0;
+    dir[0] = 0;
+    dir[1] = 0;
+    dir[2] = 0;
+    vec2i dims;
+    dims[0] = 4;
+    dims[1] = 4;
+    add_equitri_array(&array, center, dir, dims, 1);
     return 0;
 
     for (int z = 0; z < size * 2; z++)

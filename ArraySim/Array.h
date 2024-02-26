@@ -6,7 +6,6 @@
 #include <math.h>
 #include <tuple>
 #include <complex>
-#include "Eigen/Sparse"
 #include "Types.h"
 
 //operates in free space right now
